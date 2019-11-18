@@ -8,6 +8,7 @@ import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Range;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.concurrent.ExecutionException;
 public class CacheExample {
     @Data
     @Builder
+    @ToString
     static class Employee{
         private Integer id;
         private String name;
@@ -56,8 +58,9 @@ public class CacheExample {
         for(int i : ContiguousSet.create(range1, DiscreteDomain.integers())){
             Thread t = new Thread(()->{
                 try {
-                    System.out.printf("%s get\n", Thread.currentThread().getName());
-                    loadingCache.get(i<=3 ? i : i - 3);
+
+                    Employee emp = loadingCache.get(i<=3 ? i : i - 3);
+                    System.out.printf("%s got %s\n", Thread.currentThread().getName(), emp);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -74,7 +77,7 @@ public class CacheExample {
         HashMap<Integer, Employee> db = new HashMap<>();
         Arrays.asList(emp1, emp2, emp3).forEach(e -> db.put(e.getId(), e));
 
-        System.out.println("database query hint for " + id);
+        System.out.println("database query: id= " + id);
         return db.get(id);
     }
 }
