@@ -1,6 +1,5 @@
 package org.demos;
 
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ComparisonChain;
 import lombok.Builder;
 import lombok.Data;
@@ -53,9 +52,10 @@ public class ObjectsExample {
         System.out.println(Objects.toString(p1));
 
         System.out.printf("p1.equals(p2):%b\n", Objects.equals(p1, p2));
+        System.out.printf("p1.equals(p3):%b\n", Objects.equals(p1, p3));
 
         System.out.printf("list contains p2:%b\n", list.contains(p2));
-
+        System.out.printf("list contains p3:%b\n", list.contains(p3));
         list.add(p2);
         list.add(p3);
         System.out.println("before sort:");
